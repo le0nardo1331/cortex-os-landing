@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Córtex OS — Mini Curso Gratuito</title>
+  <meta name="description" content="Aprenda a criar o consultor de IA da sua empresa em 15 minutos. Gratuito.">
+
+  <!-- META PIXEL — adicionar ID quando criar pixel para Córtex OS -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #020617;
+      --surface:  #0f172a;
+      --border:   #1e293b;
+      --purple:   #a855f7;
+      --blue:     #3b82f6;
+      --text:     #f1f5f9;
+      --muted:    #64748b;
+      --radius:   12px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(168,85,247,.15);
+      border: 1px solid rgba(168,85,247,.3);
+      color: var(--purple);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 5vw, 42px);
+      font-weight: 800;
+      line-height: 1.15;
+      text-align: center;
+      max-width: 700px;
+      margin-bottom: 16px;
+    }
+
+    h1 span { color: var(--purple); }
+
+    .sub {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--muted);
+      text-align: center;
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 480px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .bullet-icon {
+      width: 22px;
+      height: 22px;
+      background: rgba(168,85,247,.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 11px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 15px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--purple);
+    }
+
+    select option { background: var(--surface); }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .divider-label {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      margin-top: -8px;
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 15px;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+      margin-top: 8px;
+    }
+
+    .btn:hover { opacity: .9; }
+    .btn:active { transform: scale(.99); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    .privacy {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .error-msg {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      .card { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="badge">🧠 Mini Curso Gratuito</div>
+
+  <h1>Crie o <span>consultor de IA</span><br>da sua empresa hoje</h1>
+
+  <p class="sub">15 minutos de aula prática. Sem enrolação. Você sai com um consultor funcionando no seu negócio.</p>
+
+  <div class="bullets">
+    <div class="bullet">
+      <div class="bullet-icon">✓</div>
+      <span>Como configurar o Claude para conhecer tudo sobre a sua empresa</span>
+    </div>
+    <div class="bullet">
+      <div class="bullet-icon">✓</div>
+      <span>Como adicionar seus documentos reais como base de conhecimento</span>
+    </div>
+    <div class="bullet">
+      <div class="bullet-icon">✓</div>
+      <span>Qual modelo usar pra cada decisão (Sonnet vs Opus)</span>
+    </div>
+    <div class="bullet">
+      <div class="bullet-icon">✓</div>
+      <span>Bônus: guia completo de Markdown pra ter respostas mais precisas</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Liberar acesso gratuito</div>
+    <div class="card-sub">Preenche abaixo e a aula abre na hora.</div>
+
+    <form id="form">
+      <div class="field">
+        <label>Seu nome</label>
+        <input type="text" id="nome" placeholder="Como você prefere ser chamado" required>
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="tel" id="whatsapp" placeholder="(51) 99999-9999" required>
+      </div>
+      <div class="field">
+        <label>E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" required>
+      </div>
+
+      <hr class="divider">
+      <p class="divider-label">Duas perguntas rápidas — me ajudam a entregar algo melhor pra ti</p>
+
+      <div class="field">
+        <label>Qual o maior gargalo do seu negócio hoje?</label>
+        <textarea id="gargalo" placeholder="Ex: atendimento lento, falta de tempo pra criar conteúdo, decisões sem dados..."></textarea>
+      </div>
+      <div class="field">
+        <label>Faturamento mensal aproximado</label>
+        <select id="faturamento">
+          <option value="" disabled selected>Seleciona uma opção</option>
+          <option value="ate-10k">Até R$10 mil</option>
+          <option value="10k-50k">R$10 mil a R$50 mil</option>
+          <option value="50k-100k">R$50 mil a R$100 mil</option>
+          <option value="acima-100k">Acima de R$100 mil</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn" id="btn">Quero minha aula gratuita →</button>
+      <p class="error-msg" id="error">Algo deu errado. Tenta de novo.</p>
+    </form>
+
+    <p class="privacy">🔒 Seus dados ficam seguros. Sem spam.</p>
+  </div>
+
+  <script>
+    const SUPABASE_URL  = 'https://vrbuoczfubqhytwfqgrg.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyYnVvY3pmdWJxaHl0d2ZxZ3JnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMjU5NDAsImV4cCI6MjA5MDkwMTk0MH0.iFujY3vuueCr57XW0zy_WrzMNOtR0tY8PuhKfYk7JVo';
+
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn   = document.getElementById('btn');
+      const error = document.getElementById('error');
+
+      btn.disabled    = true;
+      btn.textContent = 'Liberando acesso...';
+      error.style.display = 'none';
+
+      const payload = {
+        nome:        document.getElementById('nome').value.trim(),
+        email:       document.getElementById('email').value.trim(),
+        whatsapp:    document.getElementById('whatsapp').value.trim(),
+        gargalo:     document.getElementById('gargalo').value.trim(),
+        faturamento: document.getElementById('faturamento').value,
+      };
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/cortex_leads`, {
+          method: 'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            'apikey':        SUPABASE_ANON,
+            'Authorization': `Bearer ${SUPABASE_ANON}`,
+            'Prefer':        'return=minimal',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        // Pixel — Lead
+        // if (window.fbq) fbq('track', 'Lead'); // ativar após configurar pixel
+
+        window.location.href = 'aula.html';
+
+      } catch (err) {
+        console.error(err);
+        error.style.display = 'block';
+        btn.disabled    = false;
+        btn.textContent = 'Quero minha aula gratuita →';
+      }
+    });
+
+    // Máscara WhatsApp
+    document.getElementById('whatsapp').addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length <= 11) {
+        v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+        v = v.replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+      }
+      e.target.value = v;
+    });
+  </script>
+
+</body>
+</html>
